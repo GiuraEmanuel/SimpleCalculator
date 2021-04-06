@@ -6,7 +6,14 @@ namespace CalculatorApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+           
+            Calculator calculator = new Calculator();
+            int input1 = Convert.ToInt32(Console.ReadLine());
+            int input2 = Convert.ToInt32(Console.ReadLine());
+            while (true)
+            {
+                Console.WriteLine("Input: ");
+            }
         }
     }
 }
