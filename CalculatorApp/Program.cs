@@ -6,13 +6,17 @@ namespace CalculatorApp
     {
         static void Main(string[] args)
         {
-           
             Calculator calculator = new Calculator();
-            int input1 = Convert.ToInt32(Console.ReadLine());
-            int input2 = Convert.ToInt32(Console.ReadLine());
             while (true)
             {
                 Console.WriteLine("Input: ");
+                string input = Console.ReadLine();
+                if (input == "exit")
+                {
+                    Console.WriteLine("Exiting...");
+                    break;
+                }
+                Console.WriteLine(calculator.ProcessInput(input));
             }
         }
     }

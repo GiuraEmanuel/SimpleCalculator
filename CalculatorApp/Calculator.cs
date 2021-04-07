@@ -6,9 +6,11 @@ namespace CalculatorApp
 {
     class Calculator
     {
-        public int Sum(int a, int b)
+        public string ProcessInput(string input)
         {
-            return a + b;
+            var enteredInput = int.Parse(input);
+
+            return (enteredInput + enteredInput).ToString();
         }
     }
 }
