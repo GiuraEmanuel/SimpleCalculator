@@ -1,16 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalculatorApp
 {
-    class Calculator
+    public class Calculator
     {
-        public string ProcessInput(string input)
+        public double Process(string input, out string message)
         {
-            var enteredInput = int.Parse(input);
+            char[] operatorsArray = { '+', '~', '/', 'x' };
+            var operatorIndex = input.IndexOfAny(operatorsArray);
 
-            return (enteredInput + enteredInput).ToString();
+            var mathOperator = input[operatorIndex];
+
+            if (operatorIndex == -1)
+            {
+                throw new FormatException("Missing a valid operator");
+            }
+
+            string[] values = input.Split(mathOperator);
+
+            if (values.Length != 2)
+            {
+                throw new FormatException("Please provided 2 values.");
+            }
+
+            var firstValueParsed = double.Parse(values[0]);
+            var secondValueParsed = double.Parse(values[1]);
+
+
+
+            double result = 0;
+
+            switch (mathOperator)
+            {
+                case '+':
+                    result = firstValueParsed + secondValueParsed;
+                    break;
+
+                case '~':
+                    result = firstValueParsed - secondValueParsed;
+                    break;
+
+                case '/':
+                    result = firstValueParsed / secondValueParsed;
+                    break;
+
+                case 'x':
+                    result = firstValueParsed * secondValueParsed;
+                    break;
+            }
+            message = "Result: " + result;
+            return result;
         }
     }
 }
