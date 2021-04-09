@@ -24,51 +24,11 @@ namespace CalculatorApp.Tests
         }
 
         [TestMethod]
-        public void IntegerSubtraction()
+        public void IntegerAdditionWithNegativeNumbers()
         {
             Calculator calculator = new Calculator();
 
-            Assert.AreEqual(4, calculator.Process("5~1", out _));
-        }
-
-        [TestMethod]
-        public void DoubleSubtraction()
-        {
-            Calculator calculator = new Calculator();
-
-            Assert.AreEqual(4.0, calculator.Process("5.0~1.0", out _));
-        }
-
-        [TestMethod]
-        public void IntegerDivision()
-        {
-            Calculator calculator = new Calculator();
-
-            Assert.AreEqual(3, calculator.Process("6/2", out _));
-        }
-
-        [TestMethod]
-        public void DoubleDivision()
-        {
-            Calculator calculator = new Calculator();
-
-            Assert.AreEqual(2.0, calculator.Process("6.0/3.0", out _));
-        }
-
-        [TestMethod]
-        public void IntegerMultiplication()
-        {
-            Calculator calculator = new Calculator();
-
-            Assert.AreEqual(10, calculator.Process("5x2", out _));
-        }
-
-        [TestMethod]
-        public void DoubleMultiplication()
-        {
-            Calculator calculator = new Calculator();
-
-            Assert.AreEqual(10.0, calculator.Process("5.0x2.0", out _));
+            Assert.AreEqual(-6, calculator.Process("-5 + -1", out _));
         }
     }
 }

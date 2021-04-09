@@ -4,8 +4,10 @@ namespace CalculatorApp
 {
     public class Calculator
     {
+
         public double Process(string input, out string message)
         {
+            input = PrepareInput(input);
             char[] operatorsArray = { '+', '~', '/', 'x' };
             var operatorIndex = input.IndexOfAny(operatorsArray);
 
@@ -50,6 +52,28 @@ namespace CalculatorApp
             }
             message = "Result: " + result;
             return result;
+        }
+
+        private static string PrepareInput(string input)
+        {
+            input = input.Replace(" ", "");
+
+            if (input.Length < 1)
+            {
+                throw new FormatException("Input cannot be empty.");
+            }
+
+            var index = input.IndexOf('-', 1);
+            // -5 - -1
+
+            if (index >= 0 && (input[index - 1] == '.' || char.IsDigit(input[index - 1])))
+            {
+                var inputArray = input.ToCharArray();
+                inputArray[index] = '~';
+
+                input = new string(inputArray);
+            }
+            return input;
         }
     }
 }
