@@ -1,5 +1,6 @@
 ﻿using CalculatorApp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace SimpleCalculator.Tests
 {
@@ -10,7 +11,7 @@ namespace SimpleCalculator.Tests
         {
             Calculator calculator = new Calculator();
 
-            Assert.AreEqual(-6, calculator.Process("-5 + -1", out _));
+            Assert.ThrowsException<FormatException>(() => calculator.Process("a", out _));
         }
     }
 }
