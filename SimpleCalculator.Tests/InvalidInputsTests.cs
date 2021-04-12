@@ -4,6 +4,7 @@ using System;
 
 namespace SimpleCalculator.Tests
 {
+    [TestClass]
     public class InvalidInputsTests
     {
         [TestMethod]
@@ -11,7 +12,12 @@ namespace SimpleCalculator.Tests
         {
             Calculator calculator = new Calculator();
 
-            Assert.ThrowsException<FormatException>(() => calculator.Process("a", out _));
+            Assert.ThrowsException<FormatException>(() => calculator.Process("a + 1", out _));
+            Assert.ThrowsException<FormatException>(() => calculator.Process("a + a", out _));
+            Assert.ThrowsException<FormatException>(() => calculator.Process("a1 + 5", out _));
+            Assert.ThrowsException<FormatException>(() => calculator.Process("a1 + a2", out _));
         }
     }
+
+
 }
