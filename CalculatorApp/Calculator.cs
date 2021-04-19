@@ -28,7 +28,10 @@ namespace CalculatorApp
             var firstValueParsed = double.Parse(values[0]);
             var secondValueParsed = double.Parse(values[1]);
 
-
+            if (secondValueParsed == 0 && mathOperator == operatorsArray[2])
+            {
+                throw new DivideByZeroException("Division by zero is not accepted.");
+            }
 
             double result = 0;
 
@@ -64,7 +67,6 @@ namespace CalculatorApp
             }
 
             var index = input.IndexOf('-', 1);
-            // -5 - -1
 
             if (index >= 0 && (input[index - 1] == '.' || char.IsDigit(input[index - 1])))
             {
