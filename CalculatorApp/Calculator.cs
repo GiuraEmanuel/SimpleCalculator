@@ -4,54 +4,50 @@ namespace CalculatorApp
 {
     public class Calculator
     {
-
         public double Process(string input, out string message)
         {
             input = PrepareInput(input);
             char[] operatorsArray = { '+', '~', '/', 'x' };
             var operatorIndex = input.IndexOfAny(operatorsArray);
 
-            var mathOperator = input[operatorIndex];
-
+            double result = 0;
             if (operatorIndex == -1)
             {
-                throw new FormatException("Missing a valid operator");
+                result = double.Parse(input);
             }
-
-            string[] values = input.Split(mathOperator);
-
-            if (values.Length != 2)
+            else
             {
-                throw new FormatException("Please provided 2 values.");
-            }
+                var mathOperator = input[operatorIndex];
 
-            var firstValueParsed = double.Parse(values[0]);
-            var secondValueParsed = double.Parse(values[1]);
+                string[] values = input.Split(mathOperator);
 
-            if (secondValueParsed == 0 && mathOperator == operatorsArray[2])
-            {
-                throw new DivideByZeroException("Division by zero is not accepted.");
-            }
+                if (values.Length != 2)
+                {
+                    throw new FormatException("Please provided 2 values.");
+                }
 
-            double result = 0;
+                var firstValueParsed = double.Parse(values[0]);
+                var secondValueParsed = double.Parse(values[1]);
 
-            switch (mathOperator)
-            {
-                case '+':
-                    result = firstValueParsed + secondValueParsed;
-                    break;
 
-                case '~':
-                    result = firstValueParsed - secondValueParsed;
-                    break;
+                switch (mathOperator)
+                {
+                    case '+':
+                        result = firstValueParsed + secondValueParsed;
+                        break;
 
-                case '/':
-                    result = firstValueParsed / secondValueParsed;
-                    break;
+                    case '~':
+                        result = firstValueParsed - secondValueParsed;
+                        break;
 
-                case 'x':
-                    result = firstValueParsed * secondValueParsed;
-                    break;
+                    case '/':
+                        result = firstValueParsed / secondValueParsed;
+                        break;
+
+                    case 'x':
+                        result = firstValueParsed * secondValueParsed;
+                        break;
+                }
             }
             message = "Result: " + result;
             return result;
