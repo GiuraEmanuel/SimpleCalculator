@@ -2,7 +2,7 @@
 
 namespace CalculatorApp
 {
-    public class Calculator
+    public class Calculator: ICalculator
     {
         public double Process(string input, out string message)
         {

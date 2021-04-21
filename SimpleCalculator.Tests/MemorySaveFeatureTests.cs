@@ -11,15 +11,20 @@ namespace CalculatorApp.Tests
     public class MemorySaveFeatureTests
     {
         [TestMethod]
-        public void SaveToMemory()
+        public void StoreAndRecallLastResult()
         {
-            
+            var calculator = TestHelper.CreateFullCalculator();
+
+            Assert.AreEqual(5, calculator.Process("5", out _));
+            Assert.AreEqual(5, calculator.Process("save M1", out string message));
+            Assert.AreEqual("Saved value 5 into memory slot 1.", message);
+            Assert.AreEqual(5, calculator.Process("M1", out _));
         }
 
         [TestMethod]
         public void SingleValueWithNoOperator()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(1, calculator.Process("1", out _));
             Assert.AreEqual(-1, calculator.Process("-1", out _));

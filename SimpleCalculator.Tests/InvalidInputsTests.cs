@@ -1,4 +1,5 @@
 ﻿using CalculatorApp;
+using CalculatorApp.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -10,7 +11,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void InvalidInputs_ThrowsFormatException()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.ThrowsException<FormatException>(() => calculator.Process("a + 1", out _));
             Assert.ThrowsException<FormatException>(() => calculator.Process("a + a", out _));

@@ -1,4 +1,5 @@
 ﻿using CalculatorApp;
+using CalculatorApp.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SimpleCalculator.Tests
@@ -9,7 +10,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void IntegerMultiplication()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(5*5, calculator.Process("5x5", out _));
             Assert.AreEqual(20*5, calculator.Process("20x5", out _));
@@ -19,7 +20,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void IntegerMultiplicationWithNegativeNumbers()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(-5* - 5, calculator.Process("-5x-5", out _));
             Assert.AreEqual(-20*5, calculator.Process("-20x5", out _));
@@ -29,7 +30,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void DoubleMultiplication()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(1.0 * 5.0, calculator.Process("1.0x5.0", out _));
             Assert.AreEqual(5.55555555555 * 555555555.55555, calculator.Process("5.55555555555x555555555.55555", out _));
@@ -40,7 +41,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void DoubleMultiplicationWithNegativeNumbers()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(-1.0 * - 5.0, calculator.Process("-1.0 x -5.0", out _));
             Assert.AreEqual(-5.555 * 5.0, calculator.Process("-5.555 x 5.0", out _));

@@ -1,4 +1,5 @@
 ﻿using CalculatorApp;
+using CalculatorApp.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SimpleCalculator.Tests
@@ -9,7 +10,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void IntegerSubtraction()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(5 - 5, calculator.Process("5-5", out _));
             Assert.AreEqual(25 - 15, calculator.Process("25-15", out _));
@@ -19,7 +20,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void IntegerSubtractionWithNegativeNumbers()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(-5 - -5, calculator.Process("-5 - -5", out _));
             Assert.AreEqual(-25 - 15, calculator.Process("-25-15", out _));
@@ -29,7 +30,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void DoubleSubtraction()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(1.0 - 5.0, calculator.Process("1.0-5.0", out _));
             Assert.AreEqual(2.535 - 1.345, calculator.Process("2.535-1.345", out _));
@@ -40,7 +41,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void DoubleSubtractionWithNegativeNumbers()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(-1.0 - -5.0, calculator.Process("-1.0 - -5.0", out _));
             Assert.AreEqual(-2.535 - 1.345, calculator.Process("-2.535-1.345", out _));

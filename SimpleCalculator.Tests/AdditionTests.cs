@@ -9,7 +9,7 @@ namespace CalculatorApp.Tests
         [TestMethod]
         public void IntegerAddition()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(5, calculator.Process("1+4", out _));
             Assert.AreEqual(32879283 + 32879283, calculator.Process("32879283 + 32879283", out _));
@@ -19,7 +19,7 @@ namespace CalculatorApp.Tests
         [TestMethod]
         public void IntegerAdditionWithNegativeNumbers()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(-5 + -1, calculator.Process("-5 + -1", out _));
             Assert.AreEqual(-999 + -52324, calculator.Process("-999 + -52324", out _));
@@ -29,7 +29,7 @@ namespace CalculatorApp.Tests
         [TestMethod]
         public void DoubleAddition()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(1.0 + 5.0, calculator.Process("1.0+5.0", out _));
             Assert.AreEqual(5.55555555555 + 555555555.55555, calculator.Process("5.55555555555+555555555.55555", out _));
@@ -39,7 +39,7 @@ namespace CalculatorApp.Tests
         [TestMethod]
         public void DoubleAdditionWithNegativeNumbers()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(-1.0 + -5.0, calculator.Process("-1.0 + -5.0", out _));
             Assert.AreEqual(-5.555 + 5.0, calculator.Process("-5.555 + 5.0", out _));
