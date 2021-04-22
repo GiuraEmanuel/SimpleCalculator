@@ -53,7 +53,7 @@ namespace CalculatorApp.Tests
 
             Assert.AreEqual(6 - 2, calculator.Process(" 6-2", out _));
             Assert.AreEqual(6 - 2, calculator.Process("6-2 ", out _));
-            Assert.AreEqual(6 - -2, calculator.Process(" 6  -  -  2 ", out _));
+            Assert.AreEqual(6 - -2, calculator.Process("6  -  -2", out _));
             Assert.AreEqual(6 - 2, calculator.Process(" 6  -  2 ", out _));
             Assert.AreEqual(6 - 2, calculator.Process(" 6  - 2 ", out _));
         }

@@ -3,7 +3,7 @@ using CalculatorApp.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace SimpleCalculator.Tests
+namespace CalculatorApp.Tests
 {
     [TestClass]
     public class InvalidInputsTests

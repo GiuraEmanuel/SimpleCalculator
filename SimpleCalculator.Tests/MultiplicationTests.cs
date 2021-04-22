@@ -51,11 +51,11 @@ namespace CalculatorApp.Tests
         {
             var calculator = TestHelper.CreateFullCalculator();
 
-            Assert.AreEqual(6 * 2, calculator.Process(" 6*2", out _));
-            Assert.AreEqual(6 * 2, calculator.Process("6*2 ", out _));
-            Assert.AreEqual(6 * 2, calculator.Process(" 6*2 ", out _));
-            Assert.AreEqual(6 * 2, calculator.Process(" 6 *  2 ", out _));
-            Assert.AreEqual(6 * 2, calculator.Process(" 6  * 2 ", out _));
+            Assert.AreEqual(6 * 2, calculator.Process(" 6x2", out _));
+            Assert.AreEqual(6 * 2, calculator.Process("6x2 ", out _));
+            Assert.AreEqual(6 * 2, calculator.Process(" 6x2 ", out _));
+            Assert.AreEqual(6 * 2, calculator.Process(" 6 x  2 ", out _));
+            Assert.AreEqual(6 * 2, calculator.Process(" 6  x 2 ", out _));
         }
 
     }
