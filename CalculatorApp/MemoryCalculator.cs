@@ -7,7 +7,7 @@ namespace CalculatorApp
     {
         private ICalculator _calculator;
 
-        private Dictionary<UInt32, double> savedValues = new Dictionary<UInt32, double>();
+        private Dictionary<uint, double> savedValues = new Dictionary<uint, double>();
 
         public MemoryCalculator(ICalculator calculator)
         {

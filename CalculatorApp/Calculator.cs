@@ -59,10 +59,7 @@ namespace CalculatorApp
 
         private static string PrepareInput(string input)
         {
-            input = input.Trim();
-
-            while (input.Contains("  "))
-                input = input.Replace("  ", " ");
+            input = Input.RemoveExtraSpaces(input);
 
             if (input.Length < 1)
             {
@@ -71,7 +68,7 @@ namespace CalculatorApp
 
             var index = input.IndexOf('-', 1);
 
-            if (MinusReplacementIsNeeded(input,index))
+            if (MinusReplacementIsNeeded(input, index))
             {
                 var inputArray = input.ToCharArray();
                 inputArray[index] = '~';
@@ -80,6 +77,8 @@ namespace CalculatorApp
             }
             return input;
         }
+
+        
 
         private static bool MinusReplacementIsNeeded(string input, int index)
         {
