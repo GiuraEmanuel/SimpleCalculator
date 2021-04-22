@@ -1,8 +1,6 @@
-﻿using CalculatorApp;
-using CalculatorApp.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SimpleCalculator.Tests
+namespace CalculatorApp.Tests
 {
     [TestClass]
     public class SubtractionTests
@@ -46,6 +44,18 @@ namespace SimpleCalculator.Tests
             Assert.AreEqual(-1.0 - -5.0, calculator.Process("-1.0 - -5.0", out _));
             Assert.AreEqual(-2.535 - 1.345, calculator.Process("-2.535-1.345", out _));
             Assert.AreEqual(15.2357 - -10.5336, calculator.Process("15.2357 - -10.5336", out _));
+        }
+
+        [TestMethod]
+        public void ExtraSpaces()
+        {
+            var calculator = TestHelper.CreateFullCalculator();
+
+            Assert.AreEqual(6 - 2, calculator.Process(" 6-2", out _));
+            Assert.AreEqual(6 - 2, calculator.Process("6-2 ", out _));
+            Assert.AreEqual(6 - -2, calculator.Process(" 6  -  -  2 ", out _));
+            Assert.AreEqual(6 - 2, calculator.Process(" 6  -  2 ", out _));
+            Assert.AreEqual(6 - 2, calculator.Process(" 6  - 2 ", out _));
         }
     }
 }

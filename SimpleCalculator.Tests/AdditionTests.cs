@@ -1,5 +1,4 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace CalculatorApp.Tests
 {
@@ -14,6 +13,7 @@ namespace CalculatorApp.Tests
             Assert.AreEqual(5, calculator.Process("1+4", out _));
             Assert.AreEqual(32879283 + 32879283, calculator.Process("32879283 + 32879283", out _));
             Assert.AreEqual(10 + 1000, calculator.Process("10+1000", out _));
+
         }
 
         [TestMethod]
@@ -44,6 +44,18 @@ namespace CalculatorApp.Tests
             Assert.AreEqual(-1.0 + -5.0, calculator.Process("-1.0 + -5.0", out _));
             Assert.AreEqual(-5.555 + 5.0, calculator.Process("-5.555 + 5.0", out _));
             Assert.AreEqual(11.999 + -12.3002498290, calculator.Process("11.999 + -12.3002498290", out _));
+        }
+
+        [TestMethod]
+        public void ExtraSpaces()
+        {
+            var calculator = TestHelper.CreateFullCalculator();
+
+            Assert.AreEqual(6 + 2, calculator.Process(" 6+2", out _));
+            Assert.AreEqual(6 + 2, calculator.Process("6+2 ", out _));
+            Assert.AreEqual(6 + 2, calculator.Process(" 6+2 ", out _));
+            Assert.AreEqual(6 + 2, calculator.Process(" 6 +  2 ", out _));
+            Assert.AreEqual(6 + 2, calculator.Process(" 6  + 2 ", out _));
         }
     }
 }

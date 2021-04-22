@@ -1,6 +1,4 @@
-﻿using CalculatorApp;
-using CalculatorApp.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace CalculatorApp.Tests
@@ -59,6 +57,18 @@ namespace CalculatorApp.Tests
             Assert.ThrowsException<DivideByZeroException>(() => calculator.Process("1/0", out _));
             Assert.ThrowsException<DivideByZeroException>(() => calculator.Process("1.0/0.0", out _));
             Assert.ThrowsException<DivideByZeroException>(() => calculator.Process("1.000/0.000", out _));
+        }
+
+        [TestMethod]
+        public void ExtraSpaces()
+        {
+            var calculator = TestHelper.CreateFullCalculator();
+
+            Assert.AreEqual(6 / 2, calculator.Process(" 6/2", out _));
+            Assert.AreEqual(6 / 2, calculator.Process("6/2 ", out _));
+            Assert.AreEqual(6 / 2, calculator.Process(" 6/2 ", out _));
+            Assert.AreEqual(6 / 2, calculator.Process(" 6 /  2 ", out _));
+            Assert.AreEqual(6 / 2, calculator.Process(" 6  / 2 ", out _));
         }
     }
 }

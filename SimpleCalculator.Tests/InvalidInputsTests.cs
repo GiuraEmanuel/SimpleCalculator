@@ -25,11 +25,7 @@ namespace SimpleCalculator.Tests
             Assert.ThrowsException<FormatException>(() => calculator.Process("+ 9", out _));
             Assert.ThrowsException<FormatException>(() => calculator.Process("", out _));
             Assert.ThrowsException<FormatException>(() => calculator.Process("1 2 3 + 4 5 6", out _));
-            Assert.ThrowsException<FormatException>(() => calculator.Process(" 1+2", out _));
-            Assert.ThrowsException<FormatException>(() => calculator.Process("1+2 ", out _));
-            Assert.ThrowsException<FormatException>(() => calculator.Process(" 1+2 ", out _));
-            Assert.ThrowsException<FormatException>(() => calculator.Process(" 1 +  2 ", out _));
-            Assert.ThrowsException<FormatException>(() => calculator.Process(" 1  + 2 ", out _));
+            
         }
     }
 

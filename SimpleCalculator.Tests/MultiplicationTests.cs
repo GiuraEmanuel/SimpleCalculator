@@ -1,8 +1,6 @@
-﻿using CalculatorApp;
-using CalculatorApp.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SimpleCalculator.Tests
+namespace CalculatorApp.Tests
 {
     [TestClass]
     public class MultiplicationTests
@@ -47,5 +45,18 @@ namespace SimpleCalculator.Tests
             Assert.AreEqual(-5.555 * 5.0, calculator.Process("-5.555 x 5.0", out _));
             Assert.AreEqual(11.999 * - 12.3002498290, calculator.Process("11.999 x -12.3002498290", out _));
         }
+
+        [TestMethod]
+        public void ExtraSpaces()
+        {
+            var calculator = TestHelper.CreateFullCalculator();
+
+            Assert.AreEqual(6 * 2, calculator.Process(" 6*2", out _));
+            Assert.AreEqual(6 * 2, calculator.Process("6*2 ", out _));
+            Assert.AreEqual(6 * 2, calculator.Process(" 6*2 ", out _));
+            Assert.AreEqual(6 * 2, calculator.Process(" 6 *  2 ", out _));
+            Assert.AreEqual(6 * 2, calculator.Process(" 6  * 2 ", out _));
+        }
+
     }
 }
