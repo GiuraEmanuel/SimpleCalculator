@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CalculatorApp.Tests
 {
     [TestClass]
-    public class MemorySaveFeatureTests
+    public class MemoryCalculatorTests
     {
         [TestMethod]
         public void StoreAndRecallLastResult()

@@ -2,7 +2,7 @@
 
 namespace CalculatorApp
 {
-    public class Calculator: ICalculator
+    public class Calculator : ICalculator
     {
         public double Process(string input, out string message)
         {
@@ -29,7 +29,6 @@ namespace CalculatorApp
                 var firstValueParsed = double.Parse(values[0]);
                 var secondValueParsed = double.Parse(values[1]);
 
-
                 switch (mathOperator)
                 {
                     case '+':
@@ -41,6 +40,11 @@ namespace CalculatorApp
                         break;
 
                     case '/':
+                        if (secondValueParsed == 0)
+                        {
+                            throw new DivideByZeroException("Division by 0 is not allowed.");
+                        }
+
                         result = firstValueParsed / secondValueParsed;
                         break;
 
@@ -55,7 +59,10 @@ namespace CalculatorApp
 
         private static string PrepareInput(string input)
         {
-            input = input.Replace(" ", "");
+            input = input.Trim();
+
+            while (input.Contains("  "))
+                input = input.Replace("  ", " ");
 
             if (input.Length < 1)
             {
@@ -64,7 +71,7 @@ namespace CalculatorApp
 
             var index = input.IndexOf('-', 1);
 
-            if (index >= 0 && (input[index - 1] == '.' || char.IsDigit(input[index - 1])))
+            if (MinusReplacementIsNeeded(input,index))
             {
                 var inputArray = input.ToCharArray();
                 inputArray[index] = '~';
@@ -72,6 +79,14 @@ namespace CalculatorApp
                 input = new string(inputArray);
             }
             return input;
+        }
+
+        private static bool MinusReplacementIsNeeded(string input, int index)
+        {
+            if (index >= 0 && (input[index - 1] == '.' || char.IsDigit(input[index - 1])))
+                return true;
+
+            return index >= 2 && input[index - 1] == ' ' && (input[index - 2] == '.' || char.IsDigit(input[index - 2]));
         }
     }
 }

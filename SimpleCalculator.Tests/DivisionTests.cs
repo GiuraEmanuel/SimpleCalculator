@@ -3,7 +3,7 @@ using CalculatorApp.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace SimpleCalculator.Tests
+namespace CalculatorApp.Tests
 {
     [TestClass]
     public class DivisionTests
@@ -54,7 +54,7 @@ namespace SimpleCalculator.Tests
         [TestMethod]
         public void DivisionByZero()
         {
-            Calculator calculator = new Calculator();
+            var calculator = TestHelper.CreateFullCalculator();
 
             Assert.ThrowsException<DivideByZeroException>(() => calculator.Process("1/0", out _));
             Assert.ThrowsException<DivideByZeroException>(() => calculator.Process("1.0/0.0", out _));
