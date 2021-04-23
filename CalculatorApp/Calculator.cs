@@ -78,8 +78,6 @@ namespace CalculatorApp
             return input;
         }
 
-        
-
         private static bool MinusReplacementIsNeeded(string input, int index)
         {
             if (index >= 0 && (input[index - 1] == '.' || char.IsDigit(input[index - 1])))
