@@ -19,6 +19,7 @@ namespace CalculatorApp.Tests
             Assert.AreEqual(5, calculator.Process("save M1", out string message));
             Assert.AreEqual("Saved value 5 into memory slot 1.", message);
             Assert.AreEqual(5, calculator.Process("M1", out _));
+
         }
 
         [TestMethod]

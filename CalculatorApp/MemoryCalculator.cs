@@ -38,7 +38,7 @@ namespace CalculatorApp
             {
                 if (memorySlotToValueLookup.ContainsKey(uint.Parse(number)))
                 {
-                    message = "M1" + _lastResult;
+                    message = $"M{number}" + _lastResult;
                     return _lastResult;
                 }
             }
