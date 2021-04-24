@@ -35,20 +35,18 @@ namespace CalculatorApp
             if (input.StartsWith("save M", StringComparison.OrdinalIgnoreCase))
             {
                 var numberFromString = input.Substring("save M".Length);
-
                 uint slotNumber = uint.Parse(numberFromString);
 
                 memorySlotToValueLookup.Add(slotNumber, _lastResult);
 
-                // [set the message and return the appropriate result here]
                 message = $"Saved value {_lastResult} into memory slot {slotNumber}.";
+                return _lastResult;
             }
             else
             {
                 _lastResult = _calculator.Process(input, out message);
                 return _lastResult;
             }
-            return _lastResult;
         }
     }
 }
