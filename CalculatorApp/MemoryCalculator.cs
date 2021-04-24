@@ -25,14 +25,15 @@ namespace CalculatorApp
                 var number = input.Substring("M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                if (memorySlotToValueLookup.ContainsKey(slotNumber))
+                if (memorySlotToValueLookup.TryGetValue(slotNumber, out double result))
                 {
-                    message = $"M{number}" + _lastResult;
-                    return _lastResult;
+                    message = "Result: " + result;
+                    return result;
                 }
+                throw new KeyNotFoundException($"Memory slot {slotNumber} does not contain a value.");
             }
 
-            if (input.StartsWith("save M", StringComparison.OrdinalIgnoreCase))
+            else if (input.StartsWith("save M", StringComparison.OrdinalIgnoreCase))
             {
                 var numberFromString = input.Substring("save M".Length);
                 uint slotNumber = uint.Parse(numberFromString);
