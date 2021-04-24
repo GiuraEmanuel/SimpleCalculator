@@ -16,9 +16,9 @@ namespace CalculatorApp.Tests
             var calculator = TestHelper.CreateFullCalculator();
 
             Assert.AreEqual(5, calculator.Process("5", out _));
-            Assert.AreEqual(5, calculator.Process("save M1", out string message));
-            Assert.AreEqual("Saved value 5 into memory slot 1.", message);
-            Assert.AreEqual(5, calculator.Process("M1", out _));
+            Assert.AreEqual(5, calculator.Process("save M125332323", out string message));
+            Assert.AreEqual("Saved value 5 into memory slot 125332323.", message);
+            Assert.AreEqual(5, calculator.Process("M125332323", out _));
 
         }
 

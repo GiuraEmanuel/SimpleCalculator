@@ -18,10 +18,19 @@ namespace CalculatorApp
 
         public double Process(string input, out string message)
         {
-            //save M5
             input = Input.RemoveExtraSpaces(input);
 
-            var number = input.Substring("M".Length);
+            if (input.StartsWith("M", StringComparison.OrdinalIgnoreCase))
+            {
+                var number = input.Substring("M".Length);
+                uint slotNumber = uint.Parse(number);
+
+                if (memorySlotToValueLookup.ContainsKey(slotNumber))
+                {
+                    message = $"M{number}" + _lastResult;
+                    return _lastResult;
+                }
+            }
 
             if (input.StartsWith("save M", StringComparison.OrdinalIgnoreCase))
             {
@@ -32,22 +41,13 @@ namespace CalculatorApp
                 memorySlotToValueLookup.Add(slotNumber, _lastResult);
 
                 // [set the message and return the appropriate result here]
-                message = $"Saved value {_lastResult} into memory slot 1.";
-            }
-            else if (input.StartsWith("M", StringComparison.OrdinalIgnoreCase))
-            {
-                if (memorySlotToValueLookup.ContainsKey(uint.Parse(number)))
-                {
-                    message = $"M{number}" + _lastResult;
-                    return _lastResult;
-                }
+                message = $"Saved value {_lastResult} into memory slot {slotNumber}.";
             }
             else
             {
                 _lastResult = _calculator.Process(input, out message);
                 return _lastResult;
             }
-            message = $"Saved value {_lastResult} into memory slot 1.";
             return _lastResult;
         }
     }
