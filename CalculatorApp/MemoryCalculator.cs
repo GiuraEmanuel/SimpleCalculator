@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CalculatorApp
 {
@@ -35,13 +36,31 @@ namespace CalculatorApp
 
             else if (input.StartsWith("save M", StringComparison.OrdinalIgnoreCase))
             {
-                var numberFromString = input.Substring("save M".Length);
-                uint slotNumber = uint.Parse(numberFromString);
+                var number = input.Substring("save M".Length);
+                uint slotNumber = uint.Parse(number);
 
                 memorySlotToValueLookup.Add(slotNumber, _lastResult);
 
                 message = $"Saved value {_lastResult} into memory slot {slotNumber}.";
                 return _lastResult;
+            }
+            // input clear M1
+            else if (input.StartsWith("clear M", StringComparison.OrdinalIgnoreCase))
+            {
+                var number = input.Substring("clear M".Length);
+                uint slotNumber = uint.Parse(number);
+
+                var result = memorySlotToValueLookup[slotNumber] = 0;
+
+                message = $"Slot M{slotNumber} has been cleared.";
+                return result;
+            }
+            // clear all slots
+            else if (input == "clear all" && memorySlotToValueLookup.Count == 0)
+            {
+                memorySlotToValueLookup.Clear();
+                message = "Cleared all memory slots.";
+                return memorySlotToValueLookup.Count;
             }
             else
             {
