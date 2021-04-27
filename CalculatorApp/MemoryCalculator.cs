@@ -50,17 +50,17 @@ namespace CalculatorApp
                 var number = input.Substring("clear M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                var result = memorySlotToValueLookup[slotNumber] = 0;
+                var result = memorySlotToValueLookup.Remove(slotNumber);
 
                 message = $"Slot M{slotNumber} has been cleared.";
-                return result;
+                throw new KeyNotFoundException("Slot number does not exist in memory.");
             }
             // clear all slots
-            else if (input == "clear all" && memorySlotToValueLookup.Count == 0)
+            else if (input == "clear all")
             {
+                message = $"Cleared all {memorySlotToValueLookup.Count} memory slots.";
                 memorySlotToValueLookup.Clear();
-                message = "Cleared all memory slots.";
-                return memorySlotToValueLookup.Count;
+
             }
             else
             {
