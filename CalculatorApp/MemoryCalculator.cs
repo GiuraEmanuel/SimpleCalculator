@@ -40,10 +40,9 @@ namespace CalculatorApp
                 var number = input.Substring("save M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                if (_lastResult !=null)
+                if (_lastResult != null && !memorySlotToValueLookup.ContainsValue(_lastResult.Value))
                 {
-    
-                   memorySlotToValueLookup.Add(slotNumber, _lastResult.Value);
+                    memorySlotToValueLookup.Add(slotNumber, _lastResult.Value);
                 }
 
                 message = $"Saved value {_lastResult} into memory slot {slotNumber}.";
