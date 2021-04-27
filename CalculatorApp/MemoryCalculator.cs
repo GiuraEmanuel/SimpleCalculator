@@ -8,7 +8,7 @@ namespace CalculatorApp
     {
         private ICalculator _calculator;
 
-        private double _lastResult;
+        private double? _lastResult;
 
         private Dictionary<uint, double> memorySlotToValueLookup = new Dictionary<uint, double>();
 
@@ -17,7 +17,7 @@ namespace CalculatorApp
             _calculator = calculator;
         }
 
-        public double Process(string input, out string message)
+        public double? Process(string input, out string message)
         {
             input = Input.RemoveExtraSpaces(input);
 
@@ -29,17 +29,22 @@ namespace CalculatorApp
                 if (memorySlotToValueLookup.TryGetValue(slotNumber, out double result))
                 {
                     message = "Result: " + result;
+                    _lastResult = result;
                     return result;
                 }
                 throw new KeyNotFoundException($"Memory slot {slotNumber} does not contain a value.");
             }
-
+            // save M1
             else if (input.StartsWith("save M", StringComparison.OrdinalIgnoreCase))
             {
                 var number = input.Substring("save M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                memorySlotToValueLookup.Add(slotNumber, _lastResult);
+                if (_lastResult !=null)
+                {
+    
+                   memorySlotToValueLookup.Add(slotNumber, _lastResult.Value);
+                }
 
                 message = $"Saved value {_lastResult} into memory slot {slotNumber}.";
                 return _lastResult;
@@ -50,17 +55,20 @@ namespace CalculatorApp
                 var number = input.Substring("clear M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                var result = memorySlotToValueLookup.Remove(slotNumber);
-
-                message = $"Slot M{slotNumber} has been cleared.";
-                throw new KeyNotFoundException("Slot number does not exist in memory.");
+                if (memorySlotToValueLookup.Remove(slotNumber, out double result))
+                {
+                    message = $"Slot M{slotNumber} has been cleared.";
+                    _lastResult = result;
+                    return result;
+                }
+                throw new KeyNotFoundException($"Memory slot {slotNumber} does not exist.");
             }
             // clear all slots
             else if (input == "clear all")
             {
                 message = $"Cleared all {memorySlotToValueLookup.Count} memory slots.";
                 memorySlotToValueLookup.Clear();
-
+                return null;
             }
             else
             {

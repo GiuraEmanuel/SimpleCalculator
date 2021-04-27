@@ -6,6 +6,6 @@ namespace CalculatorApp
 {
     public interface ICalculator
     {
-        double Process(string input, out string message);
+        double? Process(string input, out string message);
     }
 }

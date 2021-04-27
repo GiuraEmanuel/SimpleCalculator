@@ -4,7 +4,7 @@ namespace CalculatorApp
 {
     public class Calculator : ICalculator
     {
-        public double Process(string input, out string message)
+        public double? Process(string input, out string message)
         {
             input = PrepareInput(input);
             char[] operatorsArray = { '+', '~', '/', 'x' };
