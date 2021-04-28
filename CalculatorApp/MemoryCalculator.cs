@@ -10,7 +10,7 @@ namespace CalculatorApp
 
         private double? _lastResult;
 
-        private Dictionary<uint, double?> memorySlotToValueLookup = new Dictionary<uint, double?>();
+        private Dictionary<uint, double> memorySlotToValueLookup = new Dictionary<uint, double>();
 
         public MemoryCalculator(ICalculator calculator)
         {
@@ -26,9 +26,9 @@ namespace CalculatorApp
                 var number = input.Substring("M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                if (memorySlotToValueLookup.TryGetValue(slotNumber, out double? result))
+                if (memorySlotToValueLookup.TryGetValue(slotNumber, out double result))
                 {
-                    message = "Result: " + result;
+                    message = null; 
                     _lastResult = result;
                     return result;
                 }
@@ -43,7 +43,7 @@ namespace CalculatorApp
                 if (_lastResult != null)
                 {
                     message = $"Saved value {_lastResult} into memory slot {slotNumber}.";
-                    memorySlotToValueLookup[slotNumber] = _lastResult;
+                    memorySlotToValueLookup[slotNumber] = _lastResult.Value;
                     return _lastResult;
                 }
                 throw new InvalidOperationException("The value already exists.");
@@ -54,10 +54,9 @@ namespace CalculatorApp
                 var number = input.Substring("clear M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                if (memorySlotToValueLookup.Remove(slotNumber, out double? result))
+                if (memorySlotToValueLookup.Remove(slotNumber, out double result))
                 {
-                    message = $"Slot M{slotNumber} has been cleared.";
-                    result = 0;
+                    message = $"Memory slot {slotNumber} has been cleared.";
                     _lastResult = result;
                     return result;
                 }

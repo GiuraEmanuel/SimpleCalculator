@@ -53,7 +53,7 @@ namespace CalculatorApp
                         break;
                 }
             }
-            message = "Result: " + result;
+            message = null;
             return result;
         }
 
