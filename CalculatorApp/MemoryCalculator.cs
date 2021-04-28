@@ -10,7 +10,7 @@ namespace CalculatorApp
 
         private double? _lastResult;
 
-        private Dictionary<uint, double> memorySlotToValueLookup = new Dictionary<uint, double>();
+        private Dictionary<uint, double?> memorySlotToValueLookup = new Dictionary<uint, double?>();
 
         public MemoryCalculator(ICalculator calculator)
         {
@@ -26,7 +26,7 @@ namespace CalculatorApp
                 var number = input.Substring("M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                if (memorySlotToValueLookup.TryGetValue(slotNumber, out double result))
+                if (memorySlotToValueLookup.TryGetValue(slotNumber, out double? result))
                 {
                     message = "Result: " + result;
                     _lastResult = result;
@@ -40,13 +40,13 @@ namespace CalculatorApp
                 var number = input.Substring("save M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                if (_lastResult != null && !memorySlotToValueLookup.ContainsValue(_lastResult.Value))
+                if (_lastResult != null)
                 {
-                    memorySlotToValueLookup.Add(slotNumber, _lastResult.Value);
+                    message = $"Saved value {_lastResult} into memory slot {slotNumber}.";
+                    memorySlotToValueLookup[slotNumber] = _lastResult;
+                    return _lastResult;
                 }
-
-                message = $"Saved value {_lastResult} into memory slot {slotNumber}.";
-                return _lastResult;
+                throw new InvalidOperationException("The value already exists.");
             }
             // input clear M1
             else if (input.StartsWith("clear M", StringComparison.OrdinalIgnoreCase))
@@ -54,9 +54,10 @@ namespace CalculatorApp
                 var number = input.Substring("clear M".Length);
                 uint slotNumber = uint.Parse(number);
 
-                if (memorySlotToValueLookup.Remove(slotNumber, out double result))
+                if (memorySlotToValueLookup.Remove(slotNumber, out double? result))
                 {
                     message = $"Slot M{slotNumber} has been cleared.";
+                    result = 0;
                     _lastResult = result;
                     return result;
                 }
@@ -65,7 +66,7 @@ namespace CalculatorApp
             // clear all slots
             else if (input == "clear all")
             {
-                message = $"Cleared all {memorySlotToValueLookup.Count} memory slots.";
+                message = $"Cleared all memory slots.";
                 memorySlotToValueLookup.Clear();
                 return null;
             }

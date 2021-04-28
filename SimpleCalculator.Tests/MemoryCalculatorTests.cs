@@ -17,7 +17,7 @@ namespace CalculatorApp.Tests
             Assert.AreEqual(5, calculator.Process("M1", out _));
             Assert.AreEqual(0, calculator.Process("clear M1", out message));
             Assert.AreEqual("Slot M1 has been cleared.", message);
-            Assert.AreEqual(0, calculator.Process("clear all", out _));
+            Assert.AreEqual(null, calculator.Process("clear all", out message));
             Assert.AreEqual("Cleared all memory slots.", message);
 
         }
