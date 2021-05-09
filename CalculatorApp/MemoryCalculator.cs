@@ -79,17 +79,21 @@ namespace CalculatorApp
 
         public string ReplaceMemoryValues(string input)
         {
+            //M1234M1234
             int mIndex = input.IndexOf('M');
-            int slotNumberIndex = mIndex + 1;
-            int slotNumberLength = CountConsecutiveDigits(input, slotNumberIndex);
-            var slotNumberString = input.Substring(slotNumberIndex, slotNumberLength);
-            var slotNumber = uint.Parse(slotNumberString);
+            while (mIndex >= 0)
+            {
+                int slotNumberIndex = mIndex + 1;
+                int slotNumberLength = CountConsecutiveDigits(input, slotNumberIndex);
+                var slotNumberString = input.Substring(slotNumberIndex, slotNumberLength);
+                var slotNumber = uint.Parse(slotNumberString);
 
-            var storedValue = memorySlotToValueLookup[slotNumber];
-            string beforeSlot = input.Substring(0, mIndex);
-            string afterSlot = input.Substring(slotNumberIndex + slotNumberLength);
-            input = beforeSlot + storedValue + afterSlot;
-
+                var storedValue = memorySlotToValueLookup[slotNumber];
+                string beforeSlot = input.Substring(0, mIndex);
+                string afterSlot = input.Substring(slotNumberIndex + slotNumberLength);
+                input = beforeSlot + storedValue + afterSlot;
+                mIndex = input.IndexOf('M');
+            }
             return input;
         }
 
