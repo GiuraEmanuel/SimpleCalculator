@@ -21,21 +21,21 @@ namespace CalculatorApp
             input = Input.RemoveExtraSpaces(input);
 
 
-            if (input.StartsWith("X", StringComparison.OrdinalIgnoreCase))
-            {
-                var number = input.Substring("M".Length);
-                uint slotNumber = uint.Parse(number);
+            //if (input.StartsWith("M", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    var number = input.Substring("M".Length);
+            //    uint slotNumber = uint.Parse(number);
 
-                if (memorySlotToValueLookup.TryGetValue(slotNumber, out double result))
-                {
-                    message = null;
-                    _lastResult = result;
-                    return result;
-                }
-                throw new KeyNotFoundException($"Memory slot {slotNumber} does not contain a value.");
-            }
+            //    if (memorySlotToValueLookup.TryGetValue(slotNumber, out double result))
+            //    {
+            //        message = null;
+            //        _lastResult = result;
+            //        return result;
+            //    }
+            //    throw new KeyNotFoundException($"Memory slot {slotNumber} does not contain a value.");
+            //}
             // save M1
-            else if (input.StartsWith("save M", StringComparison.OrdinalIgnoreCase))
+            if (input.StartsWith("save M", StringComparison.OrdinalIgnoreCase))
             {
                 var number = input.Substring("save M".Length);
                 uint slotNumber = uint.Parse(number);
@@ -71,7 +71,7 @@ namespace CalculatorApp
             }
             else
             {
-                ReplaceMemoryValues(input);
+                input = ReplaceMemoryValues(input);
                 _lastResult = _calculator.Process(input, out message);
                 return _lastResult;
             }
@@ -94,6 +94,7 @@ namespace CalculatorApp
                 input = beforeSlot + storedValue + afterSlot;
                 mIndex = input.IndexOf('M');
             }
+
             return input;
         }
 
