@@ -1,13 +1,48 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CalculatorApp
 {
     public class Calculator : ICalculator
     {
+        private Dictionary<char, Func<double, double, double>> _operatorToOperationLookup = new();
+
+        public void RegisterOperator(char op, Func<double, double, double> operation)
+        {
+            // 1. Validate parameters
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+            if (!char.IsLetter(op) && !char.IsSymbol(op) && op!= '/')
+            {
+                throw new ArgumentException("Operator must be a symbol or a letter.", nameof(op));
+            }
+            // 2. Add operation to dictionary
+            _operatorToOperationLookup.Add(op, operation);
+        }
+
+        public Calculator()
+        {
+            RegisterOperator('+', (v1, v2) => v1 + v2);
+            RegisterOperator('~', (v1, v2) => v1 - v2);
+            RegisterOperator('x', (v1, v2) => v1 * v2);
+            RegisterOperator('/', (v1, v2) =>
+            {
+                if (v2 == 0)
+                {
+                    throw new DivideByZeroException("Division by 0 is not allowed.");
+                }
+                return v1 / v2;
+            });
+        }
+
+
         public double? Process(string input, out string message)
         {
             input = PrepareInput(input);
-            char[] operatorsArray = { '+', '~', '/', 'x' };
+            char[] operatorsArray = _operatorToOperationLookup.Keys.ToArray();
             var operatorIndex = input.IndexOfAny(operatorsArray);
 
             double result = 0;
@@ -29,34 +64,15 @@ namespace CalculatorApp
                 var firstValueParsed = double.Parse(values[0]);
                 var secondValueParsed = double.Parse(values[1]);
 
-                switch (mathOperator)
-                {
-                    case '+':
-                        result = firstValueParsed + secondValueParsed;
-                        break;
+                var operation = _operatorToOperationLookup[mathOperator];
+                operation.Invoke(firstValueParsed,secondValueParsed);
 
-                    case '~':
-                        result = firstValueParsed - secondValueParsed;
-                        break;
-
-                    case '/':
-                        if (secondValueParsed == 0)
-                        {
-                            throw new DivideByZeroException("Division by 0 is not allowed.");
-                        }
-
-                        result = firstValueParsed / secondValueParsed;
-                        break;
-
-                    case 'x':
-                        result = firstValueParsed * secondValueParsed;
-                        break;
-                }
+                result = operation.Invoke(firstValueParsed, secondValueParsed);
             }
             message = null;
             return result;
         }
-
+        
         private static string PrepareInput(string input)
         {
             input = Input.RemoveExtraSpaces(input);
