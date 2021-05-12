@@ -65,8 +65,6 @@ namespace CalculatorApp
                 var secondValueParsed = double.Parse(values[1]);
 
                 var operation = _operatorToOperationLookup[mathOperator];
-                operation.Invoke(firstValueParsed,secondValueParsed);
-
                 result = operation.Invoke(firstValueParsed, secondValueParsed);
             }
             message = null;
