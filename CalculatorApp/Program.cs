@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CalculatorApp
 {
@@ -6,14 +7,37 @@ namespace CalculatorApp
     {
         static void Main(string[] args)
         {
-            Calculator calculator = new Calculator();
+            var calculator = new MemoryCalculator(new Calculator());
             while (true)
             {
-                Console.WriteLine("Input");
-                var input = Console.ReadLine();
+                try
+                {
+                    Console.Write("Input: ");
+                    var input = Console.ReadLine();
+                    if (input == "exit")
+                    {
+                        break;
+                    }
 
-                //Console.WriteLine(calculator.Process(input));
+                    var result = calculator.Process(input, out string message);
+                    if (message != null)
+                    {
+                        Console.WriteLine($"Message: {message}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Result: {result}");
+                    }
+                    
+                    calculator.DisplaySlots();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                Console.WriteLine();
             }
+            
         }
     }
 }

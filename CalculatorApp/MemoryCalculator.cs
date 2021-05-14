@@ -20,21 +20,6 @@ namespace CalculatorApp
         {
             input = Input.RemoveExtraSpaces(input);
 
-
-            //if (input.StartsWith("M", StringComparison.OrdinalIgnoreCase))
-            //{
-            //    var number = input.Substring("M".Length);
-            //    uint slotNumber = uint.Parse(number);
-
-            //    if (memorySlotToValueLookup.TryGetValue(slotNumber, out double result))
-            //    {
-            //        message = null;
-            //        _lastResult = result;
-            //        return result;
-            //    }
-            //    throw new KeyNotFoundException($"Memory slot {slotNumber} does not contain a value.");
-            //}
-            // save M1
             if (input.StartsWith("save M", StringComparison.OrdinalIgnoreCase))
             {
                 var number = input.Substring("save M".Length);
@@ -45,8 +30,8 @@ namespace CalculatorApp
                     message = $"Saved value {_lastResult} into memory slot {slotNumber}.";
                     memorySlotToValueLookup[slotNumber] = _lastResult.Value;
                     return _lastResult;
-                }
-                throw new InvalidOperationException("The value already exists.");
+                }   
+                throw new InvalidOperationException("There is no previous result to store.");
             }
             // input clear M1
             else if (input.StartsWith("clear M", StringComparison.OrdinalIgnoreCase))
@@ -80,7 +65,7 @@ namespace CalculatorApp
         public string ReplaceMemoryValues(string input)
         {
             //M1234M1234
-            int mIndex = input.IndexOf('M');
+            int mIndex = input.IndexOf('M',StringComparison.OrdinalIgnoreCase);
             while (mIndex >= 0)
             {
                 int slotNumberIndex = mIndex + 1;
@@ -88,13 +73,20 @@ namespace CalculatorApp
                 var slotNumberString = input.Substring(slotNumberIndex, slotNumberLength);
                 var slotNumber = uint.Parse(slotNumberString);
 
-                var storedValue = memorySlotToValueLookup[slotNumber];
+                bool storedValue;
+                if (storedValue = memorySlotToValueLookup.TryGetValue(slotNumber, out double value))
+                {
+                    Console.WriteLine($"{value}");
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Slot {slotNumber} does not have any value associated with it.");
+                }
                 string beforeSlot = input.Substring(0, mIndex);
                 string afterSlot = input.Substring(slotNumberIndex + slotNumberLength);
                 input = beforeSlot + storedValue + afterSlot;
-                mIndex = input.IndexOf('M');
+                mIndex = input.IndexOf('M', StringComparison.OrdinalIgnoreCase);
             }
-
             return input;
         }
 
@@ -113,6 +105,14 @@ namespace CalculatorApp
                 }
             }
             return count;
+        }
+
+        public void DisplaySlots()
+        {
+            foreach (var slot in memorySlotToValueLookup.Keys)
+            {
+                Console.WriteLine($"Slot {slot} : {memorySlotToValueLookup[slot]}");
+            }
         }
     }
 }
