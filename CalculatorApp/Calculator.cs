@@ -10,7 +10,6 @@ namespace CalculatorApp
 
         public void RegisterOperator(char op, Func<double, double, double> operation)
         {
-            // 1. Validate parameters
             if (operation == null)
             {
                 throw new ArgumentNullException(nameof(operation));
@@ -19,7 +18,6 @@ namespace CalculatorApp
             {
                 throw new ArgumentException("Operator must be a symbol or a letter.", nameof(op));
             }
-            // 2. Add operation to dictionary
             _operatorToOperationLookup.Add(op, operation);
         }
 
