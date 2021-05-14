@@ -72,7 +72,7 @@ namespace CalculatorApp
 
                 if (!memorySlotToValueLookup.TryGetValue(slotNumber, out double value))
                 {
-                    throw new InvalidOperationException($"Slot {slotNumber} does not have any value associated with it.");
+                    throw new KeyNotFoundException($"Memory slot {slotNumber} does not exist.");
                 }
                     
                 string beforeSlot = input.Substring(0, mIndex);
